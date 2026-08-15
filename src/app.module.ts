@@ -5,6 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDatabaseConfig } from './config/database.config';
 import { UsersModule } from './modules/users/users.module';
 import { FarmModule } from './modules/farm/farm.module';
+import { ApprovalModule } from './modules/approval/approval.module';
+import { ProductsModule } from './modules/products/products.module';
+import { CultivationLogsModule } from './modules/cultivation-logs/cultivation-logs.module';
+import { BatchesModule } from './modules/batches/batches.module';
 
 @Module({
   imports: [
@@ -19,6 +23,14 @@ import { FarmModule } from './modules/farm/farm.module';
     UsersModule,
 
     FarmModule,
+
+    BatchesModule,
+
+    ApprovalModule,
+
+    ProductsModule,
+
+    CultivationLogsModule,
   ],
 })
 export class AppModule {}
