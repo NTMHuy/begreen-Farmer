@@ -26,6 +26,12 @@ let ApprovalService = class ApprovalService {
         this.batchRepository = batchRepository;
         this.approvalRepository = approvalRepository;
     }
+    async findAll() {
+        return this.batchRepository.find({
+            relations: { product: { farm: true }, cultivationLogs: true, images: true, approvals: true },
+            order: { createdAt: 'DESC' },
+        });
+    }
     async findPending() {
         return this.batchRepository.find({
             where: { approvalStatus: enums_1.BatchApprovalStatus.PENDING },
@@ -50,6 +56,9 @@ let ApprovalService = class ApprovalService {
         }
         batch.approvalStatus = enums_1.BatchApprovalStatus.APPROVED;
         batch.trustLevel = dto.trustLevel;
+        if (!batch.barcode) {
+            batch.barcode = this.generateBarcode(batch.batchCode);
+        }
         await this.batchRepository.save(batch);
         await this.approvalRepository.save(this.approvalRepository.create({
             batchId,
@@ -58,6 +67,10 @@ let ApprovalService = class ApprovalService {
             note: dto.note ?? null,
         }));
         return this.findOne(batchId);
+    }
+    generateBarcode(batchCode) {
+        const random = Math.random().toString(36).substring(2, 10).toUpperCase();
+        return `GF-QR-${batchCode}-${random}`;
     }
     async reject(batchId, dto) {
         const batch = await this.findOne(batchId);

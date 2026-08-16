@@ -20,6 +20,13 @@ export class ApprovalService {
     private readonly approvalRepository: Repository<Approval>,
   ) {}
 
+  async findAll(): Promise<Batch[]> {
+    return this.batchRepository.find({
+      relations: { product: { farm: true }, cultivationLogs: true, images: true, approvals: true },
+      order: { createdAt: 'DESC' },
+    });
+  }
+
   // Danh sách lô hàng đang chờ duyệt
   async findPending(): Promise<Batch[]> {
     return this.batchRepository.find({
@@ -52,6 +59,10 @@ export class ApprovalService {
 
     batch.approvalStatus = BatchApprovalStatus.APPROVED;
     batch.trustLevel = dto.trustLevel;
+    if (!batch.barcode) {
+      batch.barcode = this.generateBarcode(batch.batchCode);
+    }
+
     await this.batchRepository.save(batch);
 
     await this.approvalRepository.save(
@@ -64,6 +75,12 @@ export class ApprovalService {
     );
 
     return this.findOne(batchId);
+  }
+
+  // Sinh mã theo format GF-QR-{batchCode}-{8 ký tự ngẫu nhiên}, khớp mẫu dữ liệu đã có sẵn trong DB
+  private generateBarcode(batchCode: string): string {
+    const random = Math.random().toString(36).substring(2, 10).toUpperCase();
+    return `GF-QR-${batchCode}-${random}`;
   }
 
   async reject(batchId: number, dto: RejectBatchDto): Promise<Batch> {

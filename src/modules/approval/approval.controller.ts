@@ -14,6 +14,11 @@ export class ApprovalController {
     return this.approvalService.findPending();
   }
 
+  @Get()
+  findAll(){
+    return this.approvalService.findAll();
+  }
+
   @Get(':batchId')
   findOne(@Param('batchId', ParseIntPipe) batchId: number) {
     return this.approvalService.findOne(batchId);

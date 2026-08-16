@@ -25,6 +25,9 @@ let ApprovalController = class ApprovalController {
     findPending() {
         return this.approvalService.findPending();
     }
+    findAll() {
+        return this.approvalService.findAll();
+    }
     findOne(batchId) {
         return this.approvalService.findOne(batchId);
     }
@@ -42,6 +45,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ApprovalController.prototype, "findPending", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ApprovalController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':batchId'),
     __param(0, (0, common_1.Param)('batchId', common_1.ParseIntPipe)),
