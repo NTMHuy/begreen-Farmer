@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Batch = void 0;
 const typeorm_1 = require("typeorm");
-const product_entity_1 = require("../../products/entities/product.entity");
+const product_entity_1 = require("../../product/entities/product.entity");
 const cultivation_log_entity_1 = require("../../cultivation-logs/entities/cultivation-log.entity");
 const batch_image_entity_1 = require("./batch-image.entity");
 const approval_entity_1 = require("../../approval/entities/approval.entity");
@@ -38,28 +38,28 @@ __decorate([
     __metadata("design:type", Number)
 ], Batch.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'product_id' }),
+    (0, typeorm_1.Column)({ name: "product_id" }),
     __metadata("design:type", Number)
 ], Batch.prototype, "productId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => product_entity_1.Product, { onDelete: 'CASCADE' }),
-    (0, typeorm_1.JoinColumn)({ name: 'product_id' }),
+    (0, typeorm_1.ManyToOne)(() => product_entity_1.Product, { onDelete: "CASCADE" }),
+    (0, typeorm_1.JoinColumn)({ name: "product_id" }),
     __metadata("design:type", product_entity_1.Product)
 ], Batch.prototype, "product", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'batch_code', length: 50, unique: true }),
+    (0, typeorm_1.Column)({ name: "batch_code", length: 50, unique: true }),
     __metadata("design:type", String)
 ], Batch.prototype, "batchCode", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'planting_date', type: 'date', nullable: true }),
+    (0, typeorm_1.Column)({ name: "planting_date", type: "date", nullable: true }),
     __metadata("design:type", String)
 ], Batch.prototype, "plantingDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'harvest_date', type: 'date' }),
+    (0, typeorm_1.Column)({ name: "harvest_date", type: "date" }),
     __metadata("design:type", String)
 ], Batch.prototype, "harvestDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int' }),
+    (0, typeorm_1.Column)({ type: "int" }),
     __metadata("design:type", Number)
 ], Batch.prototype, "quantity", void 0);
 __decorate([
@@ -68,8 +68,8 @@ __decorate([
 ], Batch.prototype, "barcode", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        name: 'trust_level',
-        type: 'enum',
+        name: "trust_level",
+        type: "enum",
         enum: enums_1.TrustLevel,
         nullable: true,
     }),
@@ -77,15 +77,15 @@ __decorate([
 ], Batch.prototype, "trustLevel", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        name: 'approval_status',
-        type: 'enum',
+        name: "approval_status",
+        type: "enum",
         enum: enums_1.BatchApprovalStatus,
         default: enums_1.BatchApprovalStatus.PENDING,
     }),
     __metadata("design:type", String)
 ], Batch.prototype, "approvalStatus", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    (0, typeorm_1.CreateDateColumn)({ name: "created_at" }),
     __metadata("design:type", Date)
 ], Batch.prototype, "createdAt", void 0);
 __decorate([
@@ -101,6 +101,6 @@ __decorate([
     __metadata("design:type", Array)
 ], Batch.prototype, "approvals", void 0);
 exports.Batch = Batch = __decorate([
-    (0, typeorm_1.Entity)('batches')
+    (0, typeorm_1.Entity)("batches")
 ], Batch);
 //# sourceMappingURL=batch.entity.js.map

@@ -1,20 +1,28 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  JoinColumn,
+  Column,
+  OneToMany,
   ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+
 import { User } from '../../users/entities/user.entity';
 import { FarmImage } from './farm-image.entity';
+import { Product } from '../../product/entities/product.entity';
 
 export enum FarmStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  SUSPENDED = 'suspended',
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+}
+
+export enum TrustLevel {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
 }
 
 @Entity('farms')
@@ -23,7 +31,7 @@ export class Farm {
   id: number;
 
   @Column({ name: 'seller_id' })
-  sellerId: number;
+  seller_id: number;
 
   @ManyToOne(() => User, (user) => user.farms, {
     onDelete: 'CASCADE',
@@ -31,39 +39,69 @@ export class Farm {
   @JoinColumn({ name: 'seller_id' })
   seller: User;
 
-  @Column({
-    name: 'farm_name',
-    length: 150,
-  })
-  farmName: string;
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[];
 
-  @Column({
-    name: 'owner_name',
-    length: 100,
-    nullable: true,
-  })
-  ownerName: string;
+  @Column({ name: 'farm_name', length: 150 })
+  farm_name: string;
 
-  @Column({
-    type: 'text',
-    nullable: true,
-  })
+  @Column({ name: 'owner_name', length: 100, nullable: true })
+  owner_name: string;
+
+  @Column({ type: 'text', nullable: true })
   address: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
   @Column({
-    type: 'text',
+    name: 'area_ha',
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
     nullable: true,
   })
-  description: string;
+  area_ha: number;
+
+  @Column({
+    name: 'farming_method',
+    length: 150,
+    nullable: true,
+  })
+  farming_method: string;
+
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 7,
+    nullable: true,
+  })
+  latitude: number;
+
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 7,
+    nullable: true,
+  })
+  longitude: number;
+
+  @Column({
+    name: 'trust_level',
+    type: 'enum',
+    enum: TrustLevel,
+    default: TrustLevel.LOW,
+  })
+  trust_level: TrustLevel;
 
   @Column({
     type: 'enum',
     enum: FarmStatus,
-    default: FarmStatus.ACTIVE,
+    default: FarmStatus.PENDING,
   })
   status: FarmStatus;
 
-  @OneToMany(() => FarmImage, (farmImage) => farmImage.farm, {
+  @OneToMany(() => FarmImage, (image) => image.farm, {
     cascade: true,
   })
   images: FarmImage[];
@@ -71,10 +109,10 @@ export class Farm {
   @CreateDateColumn({
     name: 'created_at',
   })
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
   })
-  updatedAt: Date;
+  updated_at: Date;
 }

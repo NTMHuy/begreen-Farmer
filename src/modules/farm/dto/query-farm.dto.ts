@@ -1,32 +1,30 @@
-import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsOptional, IsString, IsInt, Min, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-
 import { FarmStatus } from '../entities/farm.entity';
 
 export class QueryFarmDto {
-  @IsString()
   @IsOptional()
-  search?: string;
-
+  @Type(() => Number)
   @IsInt()
   @Min(1)
-  @Type(() => Number)
-  @IsOptional()
   page?: number = 1;
 
+  @IsOptional()
+  @Type(() => Number)
   @IsInt()
   @Min(1)
-  @Type(() => Number)
-  @IsOptional()
   limit?: number = 10;
 
-  @IsEnum(FarmStatus)
   @IsOptional()
+  @IsString()
+  search?: string;
+
+  @IsOptional()
+  @IsEnum(FarmStatus)
   status?: FarmStatus;
 
-  @IsInt()
-  @Min(1)
-  @Type(() => Number)
   @IsOptional()
-  sellerId?: number;
+  @Type(() => Number)
+  @IsInt()
+  seller_id?: number;
 }

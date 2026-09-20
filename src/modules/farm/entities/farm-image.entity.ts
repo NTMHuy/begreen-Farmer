@@ -1,47 +1,51 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
 } from 'typeorm';
 
 import { Farm } from './farm.entity';
+
+// 1. Thêm export enum FarmImageType
+export enum FarmImageType {
+  FARM = 'farm',
+  CERTIFICATE = 'certificate',
+}
 
 @Entity('farm_images')
 export class FarmImage {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    name: 'farm_id',
-  })
-  farmId: number;
+  @Column({ name: 'farm_id' })
+  farm_id: number;
 
   @ManyToOne(() => Farm, (farm) => farm.images, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({
-    name: 'farm_id',
-  })
+  @JoinColumn({ name: 'farm_id' })
   farm: Farm;
 
   @Column({
     name: 'image_url',
     length: 500,
   })
-  imageUrl: string;
+  image_url: string;
 
+  // 2. Cập nhật kiểu dữ liệu sử dụng Enum
   @Column({
     name: 'image_type',
-    length: 50,
-    nullable: true,
+    type: 'enum',
+    enum: FarmImageType,
+    default: FarmImageType.FARM,
   })
-  imageType: string;
+  image_type: FarmImageType;
 
   @CreateDateColumn({
     name: 'created_at',
   })
-  createdAt: Date;
+  created_at: Date;
 }

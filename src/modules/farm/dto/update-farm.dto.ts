@@ -1,21 +1,4 @@
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateFarmDto } from './create-farm.dto';
 
-export class UpdateFarmDto {
-  @IsString()
-  @IsOptional()
-  @MaxLength(150)
-  farmName?: string;
-
-  @IsString()
-  @IsOptional()
-  @MaxLength(100)
-  ownerName?: string;
-
-  @IsString()
-  @IsOptional()
-  address?: string;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
-}
+export class UpdateFarmDto extends PartialType(CreateFarmDto) {}

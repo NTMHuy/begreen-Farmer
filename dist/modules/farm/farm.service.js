@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const farm_entity_1 = require("./entities/farm.entity");
 const user_entity_1 = require("../users/entities/user.entity");
+const farm_entity_2 = require("./entities/farm.entity");
 let FarmService = class FarmService {
     farmRepository;
     userRepository;
@@ -26,68 +27,99 @@ let FarmService = class FarmService {
         this.userRepository = userRepository;
     }
     async create(dto) {
-        const seller = await this.userRepository.findOne({
-            where: {
-                id: dto.sellerId,
-            },
-        });
-        if (!seller) {
-            throw new common_1.NotFoundException('Không tìm thấy Seller');
-        }
-        if (seller.role !== 'seller') {
-            throw new common_1.ConflictException('User này không phải Seller');
-        }
+        const seller = await this.findSellerEntity(dto.seller_id);
         const farm = this.farmRepository.create({
-            farmName: dto.farmName,
-            ownerName: dto.ownerName,
-            address: dto.address,
-            description: dto.description,
-            seller: seller,
+            ...dto,
+            seller,
+            status: farm_entity_2.FarmStatus.PENDING,
         });
-        const savedFarm = await this.farmRepository.save(farm);
-        return {
-            success: true,
-            message: 'Tạo nông trại thành công',
-            data: savedFarm,
-        };
+        return this.farmRepository.save(farm);
     }
     async findAll(query) {
-        const { search, status, sellerId, page = 1, limit = 10 } = query;
+        const { search, status, seller_id, page = 1, limit = 10 } = query;
         const qb = this.farmRepository
             .createQueryBuilder('farm')
             .leftJoinAndSelect('farm.seller', 'seller')
             .leftJoinAndSelect('farm.images', 'images');
         if (search) {
-            qb.andWhere('(farm.farmName ILIKE :search OR farm.ownerName ILIKE :search OR farm.address ILIKE :search)', { search: `%${search}%` });
+            qb.andWhere('(farm.farm_name ILIKE :search OR farm.address ILIKE :search)', { search: `%${search}%` });
         }
         if (status) {
             qb.andWhere('farm.status = :status', { status });
         }
-        if (sellerId) {
-            qb.andWhere('farm.sellerId = :sellerId', { sellerId });
+        if (seller_id) {
+            qb.andWhere('farm.seller_id = :seller_id', { seller_id });
         }
-        qb.orderBy('farm.createdAt', 'DESC')
+        qb.orderBy('farm.created_at', 'DESC')
             .skip((page - 1) * limit)
             .take(limit);
-        const [farms, total] = await qb.getManyAndCount();
+        const [items, total] = await qb.getManyAndCount();
         return {
-            items: farms,
-            meta: {
-                page,
-                limit,
-                total,
-                totalPages: Math.ceil(total / limit),
-            },
+            items,
+            meta: { page, limit, total, totalPages: Math.ceil(total / limit) },
         };
     }
-    findOne(id) {
-        return `This action returns a #${id} farm`;
+    async findAllBySeller(sellerId, query) {
+        return this.findAll({ ...query, seller_id: sellerId });
     }
-    update(id, updateFarmDto) {
-        return `This action updates a #${id} farm`;
+    async findOne(id) {
+        return this.findFarmEntity(id, {
+            relations: { seller: true, images: true },
+        });
     }
-    remove(id) {
-        return `This action removes a #${id} farm`;
+    async findOneBySeller(id, sellerId) {
+        const farm = await this.findFarmEntity(id, {
+            relations: { images: true },
+        });
+        this.ensureFarmOwnership(farm, sellerId);
+        return farm;
+    }
+    async updateBySeller(id, sellerId, dto) {
+        const farm = await this.findOneBySeller(id, sellerId);
+        Object.assign(farm, dto);
+        return this.farmRepository.save(farm);
+    }
+    async removeBySeller(id, sellerId) {
+        const farm = await this.findOneBySeller(id, sellerId);
+        await this.farmRepository.remove(farm);
+    }
+    async approve(id) {
+        return this.setStatus(id, farm_entity_2.FarmStatus.APPROVED);
+    }
+    async reject(id, note) {
+        return this.setStatus(id, farm_entity_2.FarmStatus.REJECTED);
+    }
+    async findFarmEntity(id, options) {
+        const farm = await this.farmRepository.findOne({
+            where: { id },
+            relations: options?.relations,
+        });
+        if (!farm) {
+            throw new common_1.NotFoundException('Không tìm thấy Farm');
+        }
+        return farm;
+    }
+    ensureFarmOwnership(farm, sellerId) {
+        if (farm.seller_id !== sellerId) {
+            throw new common_1.ForbiddenException('Bạn không có quyền truy cập Farm này');
+        }
+    }
+    async findSellerEntity(sellerId) {
+        const seller = await this.userRepository.findOne({
+            where: { id: sellerId },
+        });
+        if (!seller) {
+            throw new common_1.NotFoundException('Không tìm thấy Seller');
+        }
+        if (seller.role !== user_entity_1.UserRole.SELLER) {
+            throw new common_1.ConflictException('User này không phải Seller');
+        }
+        return seller;
+    }
+    async setStatus(id, status) {
+        const farm = await this.findFarmEntity(id);
+        farm.status = status;
+        return this.farmRepository.save(farm);
     }
 };
 exports.FarmService = FarmService;

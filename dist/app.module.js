@@ -13,8 +13,9 @@ const typeorm_1 = require("@nestjs/typeorm");
 const database_config_1 = require("./config/database.config");
 const users_module_1 = require("./modules/users/users.module");
 const farm_module_1 = require("./modules/farm/farm.module");
+const category_module_1 = require("./modules/category/category.module");
+const product_module_1 = require("./modules/product/product.module");
 const approval_module_1 = require("./modules/approval/approval.module");
-const products_module_1 = require("./modules/products/products.module");
 const cultivation_logs_module_1 = require("./modules/cultivation-logs/cultivation-logs.module");
 const batches_module_1 = require("./modules/batches/batches.module");
 let AppModule = class AppModule {
@@ -29,12 +30,13 @@ exports.AppModule = AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRootAsync({
                 useFactory: database_config_1.getDatabaseConfig,
             }),
-            users_module_1.UsersModule,
             farm_module_1.FarmModule,
             batches_module_1.BatchesModule,
             approval_module_1.ApprovalModule,
-            products_module_1.ProductsModule,
             cultivation_logs_module_1.CultivationLogsModule,
+            users_module_1.UsersModule,
+            category_module_1.CategoryModule,
+            product_module_1.ProductModule,
         ],
     })
 ], AppModule);

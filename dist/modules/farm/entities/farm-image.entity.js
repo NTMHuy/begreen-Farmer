@@ -9,16 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FarmImage = void 0;
+exports.FarmImage = exports.FarmImageType = void 0;
 const typeorm_1 = require("typeorm");
 const farm_entity_1 = require("./farm.entity");
+var FarmImageType;
+(function (FarmImageType) {
+    FarmImageType["FARM"] = "farm";
+    FarmImageType["CERTIFICATE"] = "certificate";
+})(FarmImageType || (exports.FarmImageType = FarmImageType = {}));
 let FarmImage = class FarmImage {
     id;
-    farmId;
+    farm_id;
     farm;
-    imageUrl;
-    imageType;
-    createdAt;
+    image_url;
+    image_type;
+    created_at;
 };
 exports.FarmImage = FarmImage;
 __decorate([
@@ -26,18 +31,14 @@ __decorate([
     __metadata("design:type", Number)
 ], FarmImage.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        name: 'farm_id',
-    }),
+    (0, typeorm_1.Column)({ name: 'farm_id' }),
     __metadata("design:type", Number)
-], FarmImage.prototype, "farmId", void 0);
+], FarmImage.prototype, "farm_id", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => farm_entity_1.Farm, (farm) => farm.images, {
         onDelete: 'CASCADE',
     }),
-    (0, typeorm_1.JoinColumn)({
-        name: 'farm_id',
-    }),
+    (0, typeorm_1.JoinColumn)({ name: 'farm_id' }),
     __metadata("design:type", farm_entity_1.Farm)
 ], FarmImage.prototype, "farm", void 0);
 __decorate([
@@ -46,21 +47,22 @@ __decorate([
         length: 500,
     }),
     __metadata("design:type", String)
-], FarmImage.prototype, "imageUrl", void 0);
+], FarmImage.prototype, "image_url", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         name: 'image_type',
-        length: 50,
-        nullable: true,
+        type: 'enum',
+        enum: FarmImageType,
+        default: FarmImageType.FARM,
     }),
     __metadata("design:type", String)
-], FarmImage.prototype, "imageType", void 0);
+], FarmImage.prototype, "image_type", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({
         name: 'created_at',
     }),
     __metadata("design:type", Date)
-], FarmImage.prototype, "createdAt", void 0);
+], FarmImage.prototype, "created_at", void 0);
 exports.FarmImage = FarmImage = __decorate([
     (0, typeorm_1.Entity)('farm_images')
 ], FarmImage);

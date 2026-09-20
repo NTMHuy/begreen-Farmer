@@ -1,9 +1,13 @@
 import { Farm } from './farm.entity';
+export declare enum FarmImageType {
+    FARM = "farm",
+    CERTIFICATE = "certificate"
+}
 export declare class FarmImage {
     id: number;
-    farmId: number;
+    farm_id: number;
     farm: Farm;
-    imageUrl: string;
-    imageType: string;
-    createdAt: Date;
+    image_url: string;
+    image_type: FarmImageType;
+    created_at: Date;
 }

@@ -14,42 +14,41 @@ const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const farm_entity_1 = require("../entities/farm.entity");
 class QueryFarmDto {
-    search;
     page = 1;
     limit = 10;
+    search;
     status;
-    sellerId;
+    seller_id;
 }
 exports.QueryFarmDto = QueryFarmDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], QueryFarmDto.prototype, "search", void 0);
-__decorate([
+    (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], QueryFarmDto.prototype, "page", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], QueryFarmDto.prototype, "limit", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(farm_entity_1.FarmStatus),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], QueryFarmDto.prototype, "search", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(farm_entity_1.FarmStatus),
     __metadata("design:type", String)
 ], QueryFarmDto.prototype, "status", void 0);
 __decorate([
-    (0, class_validator_1.IsInt)(),
-    (0, class_validator_1.Min)(1),
-    (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
-], QueryFarmDto.prototype, "sellerId", void 0);
+], QueryFarmDto.prototype, "seller_id", void 0);
 //# sourceMappingURL=query-farm.dto.js.map

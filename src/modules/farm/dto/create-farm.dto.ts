@@ -1,30 +1,54 @@
 import {
-  IsNotEmpty,
   IsString,
-  IsInt,
   IsOptional,
+  IsNumber,
+  IsLatitude,
+  IsLongitude,
   MaxLength,
+  Min,
+  IsNotEmpty,
 } from 'class-validator';
 
 export class CreateFarmDto {
-  @IsInt()
-  sellerId: number;
+  @IsNumber()
+  @IsNotEmpty()
+  seller_id: number;
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(150)
-  farmName: string;
+  farm_name: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   @MaxLength(100)
-  ownerName?: string;
+  owner_name?: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   address?: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   description?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  area_ha?: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(150)
+  farming_method?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsLatitude()
+  latitude?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @IsLongitude()
+  longitude?: number;
 }

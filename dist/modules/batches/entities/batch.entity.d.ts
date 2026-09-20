@@ -1,8 +1,8 @@
-import { Product } from '../../products/entities/product.entity';
-import { CultivationLog } from '../../cultivation-logs/entities/cultivation-log.entity';
-import { BatchImage } from './batch-image.entity';
-import { Approval } from '../../approval/entities/approval.entity';
-import { BatchApprovalStatus, TrustLevel } from '../../common/enums';
+import { Product } from "../../product/entities/product.entity";
+import { CultivationLog } from "../../cultivation-logs/entities/cultivation-log.entity";
+import { BatchImage } from "./batch-image.entity";
+import { Approval } from "../../approval/entities/approval.entity";
+import { BatchApprovalStatus, TrustLevel } from "../../common/enums";
 export declare class Batch {
     id: number;
     productId: number;

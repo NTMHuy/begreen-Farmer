@@ -11,17 +11,17 @@ export declare class UsersController {
         message: string;
         data: {
             id: number;
-            createdAt: Date;
             farms: import("../farm/entities/farm.entity").Farm[];
             address?: string | undefined;
             status: import("./entities/user.entity").UserStatus;
-            updatedAt: Date;
             fullName: string;
             email: string;
             phone?: string | undefined;
             avatar?: string | undefined;
             role: import("./entities/user.entity").UserRole;
             lastLogin?: Date | undefined;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     findAll(query: UserQueryDto): Promise<{
@@ -30,17 +30,17 @@ export declare class UsersController {
         data: {
             items: {
                 id: number;
-                createdAt: Date;
                 farms: import("../farm/entities/farm.entity").Farm[];
                 address?: string | undefined;
                 status: import("./entities/user.entity").UserStatus;
-                updatedAt: Date;
                 fullName: string;
                 email: string;
                 phone?: string | undefined;
                 avatar?: string | undefined;
                 role: import("./entities/user.entity").UserRole;
                 lastLogin?: Date | undefined;
+                createdAt: Date;
+                updatedAt: Date;
             }[];
             meta: {
                 page: number;
@@ -55,17 +55,17 @@ export declare class UsersController {
         message: string;
         data: {
             id: number;
-            createdAt: Date;
             farms: import("../farm/entities/farm.entity").Farm[];
             address?: string | undefined;
             status: import("./entities/user.entity").UserStatus;
-            updatedAt: Date;
             fullName: string;
             email: string;
             phone?: string | undefined;
             avatar?: string | undefined;
             role: import("./entities/user.entity").UserRole;
             lastLogin?: Date | undefined;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     update(id: number, updateUserDto: UpdateUserDto): Promise<{
@@ -73,17 +73,17 @@ export declare class UsersController {
         message: string;
         data: {
             id: number;
-            createdAt: Date;
             farms: import("../farm/entities/farm.entity").Farm[];
             address?: string | undefined;
             status: import("./entities/user.entity").UserStatus;
-            updatedAt: Date;
             fullName: string;
             email: string;
             phone?: string | undefined;
             avatar?: string | undefined;
             role: import("./entities/user.entity").UserRole;
             lastLogin?: Date | undefined;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     lock(id: number): Promise<{

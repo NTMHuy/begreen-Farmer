@@ -1,8 +1,8 @@
 import { FarmStatus } from '../entities/farm.entity';
 export declare class QueryFarmDto {
-    search?: string;
     page?: number;
     limit?: number;
+    search?: string;
     status?: FarmStatus;
-    sellerId?: number;
+    seller_id?: number;
 }

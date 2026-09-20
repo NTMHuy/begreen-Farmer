@@ -12,37 +12,66 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateFarmDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateFarmDto {
-    sellerId;
-    farmName;
-    ownerName;
+    seller_id;
+    farm_name;
+    owner_name;
     address;
     description;
+    area_ha;
+    farming_method;
+    latitude;
+    longitude;
 }
 exports.CreateFarmDto = CreateFarmDto;
 __decorate([
-    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
-], CreateFarmDto.prototype, "sellerId", void 0);
+], CreateFarmDto.prototype, "seller_id", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MaxLength)(150),
     __metadata("design:type", String)
-], CreateFarmDto.prototype, "farmName", void 0);
+], CreateFarmDto.prototype, "farm_name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.MaxLength)(100),
     __metadata("design:type", String)
-], CreateFarmDto.prototype, "ownerName", void 0);
+], CreateFarmDto.prototype, "owner_name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateFarmDto.prototype, "address", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateFarmDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreateFarmDto.prototype, "area_ha", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MaxLength)(150),
+    __metadata("design:type", String)
+], CreateFarmDto.prototype, "farming_method", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsLatitude)(),
+    __metadata("design:type", Number)
+], CreateFarmDto.prototype, "latitude", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsLongitude)(),
+    __metadata("design:type", Number)
+], CreateFarmDto.prototype, "longitude", void 0);
 //# sourceMappingURL=create-farm.dto.js.map
