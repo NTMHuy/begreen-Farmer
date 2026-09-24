@@ -8,5 +8,5 @@ export const getDatabaseConfig = (): TypeOrmModuleOptions => ({
   password: String(process.env.DB_PASSWORD || ""),
   database: process.env.DB_DATABASE,
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: true,
 });
