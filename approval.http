@@ -75,3 +75,49 @@ Content-Type: application/json
 {
   "adminId": 1
 }
+
+### ### Tạo lô
+POST http://localhost:3000/api/batches
+Content-Type: application/json
+
+{ "sellerId": 2, "productId": 1, "plantingDate": "2026-04-15", "harvestDate": "2026-06-15", "quantity": 120 }
+
+### Tất cả lô
+GET http://localhost:3000/api/approval
+
+### Lô đang chờ duyệt (lô id 6 vừa tạo phải có ở đây)
+GET http://localhost:3000/api/approval/pending
+
+### Chi tiết 1 lô
+GET http://localhost:3000/api/approval/6
+
+### Admin duyệt lô 6
+POST http://localhost:3000/api/approval/6/approve
+Content-Type: application/json
+
+{ "adminId": 1, "trustLevel": "Medium", "note": "Đạt yêu cầu" }
+
+### Hoặc từ chối một lô khác (ví dụ lô 5)
+POST http://localhost:3000/api/approval/5/reject
+Content-Type: application/json
+
+{ "adminId": 1, "reason": "Thiếu hình ảnh minh chứng" }
+
+### Tạo lô kèm nhật ký canh tác
+POST http://localhost:3000/api/batches
+Content-Type: application/json
+
+{
+  "sellerId": 2,
+  "productId": 1,
+  "plantingDate": "2026-04-15",
+  "harvestDate": "2026-06-15",
+  "quantity": 120,
+  "cultivationLogs": [
+    { "activity": "Gieo hạt", "description": "Gieo hạt giống", "logDate": "2026-04-15" },
+    { "activity": "Bón phân hữu cơ", "description": "Phân trùn quế", "logDate": "2026-04-25" }
+  ]
+}
+
+#####
+GET http://localhost:3000/api/seller/products?farm_id=1

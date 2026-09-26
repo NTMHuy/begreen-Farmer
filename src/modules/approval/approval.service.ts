@@ -60,7 +60,7 @@ export class ApprovalService {
     batch.approvalStatus = BatchApprovalStatus.APPROVED;
     batch.trustLevel = dto.trustLevel;
     if (!batch.barcode) {
-      batch.barcode = this.generateBarcode(batch.batchCode);
+      batch.barcode = this.generateBarcode(batch.id);
     }
 
     await this.batchRepository.save(batch);
@@ -77,10 +77,10 @@ export class ApprovalService {
     return this.findOne(batchId);
   }
 
-  // Sinh mã theo format GF-QR-{batchCode}-{8 ký tự ngẫu nhiên}, khớp mẫu dữ liệu đã có sẵn trong DB
-  private generateBarcode(batchCode: string): string {
+  // Sinh mã theo format GF-QR-{id}-{8 ký tự ngẫu nhiên}, khớp mẫu dữ liệu đã có sẵn trong DB
+  private generateBarcode(batchId: number): string {
     const random = Math.random().toString(36).substring(2, 10).toUpperCase();
-    return `GF-QR-${batchCode}-${random}`;
+    return `GF-QR-${batchId}-${random}`;
   }
 
   async reject(batchId: number, dto: RejectBatchDto): Promise<Batch> {

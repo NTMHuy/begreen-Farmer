@@ -25,11 +25,14 @@ let BatchesController = class BatchesController {
     create(createBatchDto) {
         return this.batchesService.create(createBatchDto);
     }
-    findAll() {
-        return this.batchesService.findAll();
+    findAllBySeller(sellerId) {
+        return this.batchesService.findAllBySeller(sellerId);
+    }
+    trace(code) {
+        return this.batchesService.findByBarcodeForTrace(code);
     }
     findOne(id) {
-        return this.batchesService.findOne(+id);
+        return this.batchesService.findOne(id);
     }
     update(id, updateBatchDto) {
         return this.batchesService.update(+id, updateBatchDto);
@@ -48,15 +51,23 @@ __decorate([
 ], BatchesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('sellerId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
-], BatchesController.prototype, "findAll", null);
+], BatchesController.prototype, "findAllBySeller", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)('trace/:code'),
+    __param(0, (0, common_1.Param)('code')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], BatchesController.prototype, "trace", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], BatchesController.prototype, "findOne", null);
 __decorate([

@@ -7,7 +7,6 @@ export declare class Batch {
     id: number;
     productId: number;
     product: Product;
-    batchCode: string;
     plantingDate: string;
     harvestDate: string;
     quantity: number;

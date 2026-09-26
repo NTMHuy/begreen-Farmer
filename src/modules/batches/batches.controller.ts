@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe,
+} from '@nestjs/common';
 import { BatchesService } from './batches.service';
 import { CreateBatchDto } from './dto/create-batch.dto';
 import { UpdateBatchDto } from './dto/update-batch.dto';
@@ -12,14 +14,20 @@ export class BatchesController {
     return this.batchesService.create(createBatchDto);
   }
 
+  // GET /batches?sellerId=2 (tạm thời, sau này lấy từ JWT)
   @Get()
-  findAll() {
-    return this.batchesService.findAll();
+  findAllBySeller(@Query('sellerId', ParseIntPipe) sellerId: number) {
+    return this.batchesService.findAllBySeller(sellerId);
+  }
+
+  @Get('trace/:code')
+  trace(@Param('code') code: string) {
+    return this.batchesService.findByBarcodeForTrace(code);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.batchesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.batchesService.findOne(id);
   }
 
   @Patch(':id')

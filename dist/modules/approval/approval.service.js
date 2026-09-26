@@ -57,7 +57,7 @@ let ApprovalService = class ApprovalService {
         batch.approvalStatus = enums_1.BatchApprovalStatus.APPROVED;
         batch.trustLevel = dto.trustLevel;
         if (!batch.barcode) {
-            batch.barcode = this.generateBarcode(batch.batchCode);
+            batch.barcode = this.generateBarcode(batch.id);
         }
         await this.batchRepository.save(batch);
         await this.approvalRepository.save(this.approvalRepository.create({
@@ -68,9 +68,9 @@ let ApprovalService = class ApprovalService {
         }));
         return this.findOne(batchId);
     }
-    generateBarcode(batchCode) {
+    generateBarcode(batchId) {
         const random = Math.random().toString(36).substring(2, 10).toUpperCase();
-        return `GF-QR-${batchCode}-${random}`;
+        return `GF-QR-${batchId}-${random}`;
     }
     async reject(batchId, dto) {
         const batch = await this.findOne(batchId);

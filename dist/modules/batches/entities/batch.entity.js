@@ -20,7 +20,6 @@ let Batch = class Batch {
     id;
     productId;
     product;
-    batchCode;
     plantingDate;
     harvestDate;
     quantity;
@@ -47,10 +46,6 @@ __decorate([
     __metadata("design:type", product_entity_1.Product)
 ], Batch.prototype, "product", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: "batch_code", length: 50, unique: true }),
-    __metadata("design:type", String)
-], Batch.prototype, "batchCode", void 0);
-__decorate([
     (0, typeorm_1.Column)({ name: "planting_date", type: "date", nullable: true }),
     __metadata("design:type", String)
 ], Batch.prototype, "plantingDate", void 0);
@@ -63,7 +58,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Batch.prototype, "quantity", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ length: 255, nullable: true }),
+    (0, typeorm_1.Column)({ length: 255, nullable: true, unique: true }),
     __metadata("design:type", String)
 ], Batch.prototype, "barcode", void 0);
 __decorate([
@@ -89,7 +84,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Batch.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => cultivation_log_entity_1.CultivationLog, (log) => log.batch),
+    (0, typeorm_1.OneToMany)(() => cultivation_log_entity_1.CultivationLog, (log) => log.batch, { cascade: ['insert'] }),
     __metadata("design:type", Array)
 ], Batch.prototype, "cultivationLogs", void 0);
 __decorate([

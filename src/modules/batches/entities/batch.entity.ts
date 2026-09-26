@@ -25,9 +25,6 @@ export class Batch {
   @JoinColumn({ name: "product_id" })
   product: Product;
 
-  @Column({ name: "batch_code", length: 50, unique: true })
-  batchCode: string;
-
   @Column({ name: "planting_date", type: "date", nullable: true })
   plantingDate: string;
 
@@ -39,7 +36,7 @@ export class Batch {
 
   // Mã dùng để sinh QR truy xuất nguồn gốc (Giai đoạn 3 & 4).
   // Được hệ thống tự sinh khi Admin bấm "Duyệt & tạo QR".
-  @Column({ length: 255, nullable: true })
+  @Column({ length: 255, nullable: true, unique: true })
   barcode: string;
 
   @Column({
@@ -61,7 +58,7 @@ export class Batch {
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
-  @OneToMany(() => CultivationLog, (log) => log.batch)
+  @OneToMany(() => CultivationLog, (log) => log.batch, { cascade: ['insert'] })
   cultivationLogs: CultivationLog[];
 
   @OneToMany(() => BatchImage, (image) => image.batch)

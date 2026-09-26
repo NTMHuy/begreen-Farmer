@@ -19,85 +19,28 @@ import { UpdateProductDto } from '../dto/update-product.dto';
 export class ProductSellerController {
   constructor(private readonly productService: ProductService) {}
 
-  // =========================
-  // CREATE
-  // =========================
-
   @Post()
-  async create(@Body() dto: CreateProductDto) {
-    const data = await this.productService.create(dto);
-
-    return {
-      success: true,
-      message: 'Tạo sản phẩm thành công',
-      data,
-    };
+  create(@Body() dto: CreateProductDto) {
+    return this.productService.create(dto);
   }
-
-  // =========================
-  // GET PRODUCTS BY FARM
-  // =========================
 
   @Get()
-  async findByFarm(
-    @Query('farm_id', ParseIntPipe)
-    farmId: number,
-  ) {
-    const data = await this.productService.findByFarm(farmId);
-
-    return {
-      success: true,
-      message: 'Lấy danh sách sản phẩm thành công',
-      data,
-    };
+  findByFarm(@Query('farm_id', ParseIntPipe) farmId: number) {
+    return this.productService.findByFarm(farmId);
   }
-
-  // =========================
-  // DETAIL
-  // =========================
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    const data = await this.productService.findOne(id);
-
-    return {
-      success: true,
-      message: 'Lấy thông tin sản phẩm thành công',
-      data,
-    };
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productService.findOne(id);
   }
-
-  // =========================
-  // UPDATE
-  // =========================
 
   @Patch(':id')
-  async update(
-    @Param('id', ParseIntPipe) id: number,
-
-    @Body()
-    dto: UpdateProductDto,
-  ) {
-    const data = await this.productService.update(id, dto);
-
-    return {
-      success: true,
-      message: 'Cập nhật sản phẩm thành công',
-      data,
-    };
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProductDto) {
+    return this.productService.update(id, dto);
   }
 
-  // =========================
-  // DELETE
-  // =========================
-
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number) {
-    const data = await this.productService.remove(id);
-
-    return {
-      success: true,
-      ...data,
-    };
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.productService.remove(id);
   }
 }

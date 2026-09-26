@@ -13,12 +13,13 @@ const batches_service_1 = require("./batches.service");
 const batches_controller_1 = require("./batches.controller");
 const batch_entity_1 = require("./entities/batch.entity");
 const batch_image_entity_1 = require("./entities/batch-image.entity");
+const product_entity_1 = require("../product/entities/product.entity");
 let BatchesModule = class BatchesModule {
 };
 exports.BatchesModule = BatchesModule;
 exports.BatchesModule = BatchesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([batch_entity_1.Batch, batch_image_entity_1.BatchImage])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([batch_entity_1.Batch, batch_image_entity_1.BatchImage, product_entity_1.Product])],
         controllers: [batches_controller_1.BatchesController],
         providers: [batches_service_1.BatchesService],
         exports: [typeorm_1.TypeOrmModule],

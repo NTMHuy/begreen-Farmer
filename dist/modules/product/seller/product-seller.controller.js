@@ -22,44 +22,20 @@ let ProductSellerController = class ProductSellerController {
     constructor(productService) {
         this.productService = productService;
     }
-    async create(dto) {
-        const data = await this.productService.create(dto);
-        return {
-            success: true,
-            message: 'Tạo sản phẩm thành công',
-            data,
-        };
+    create(dto) {
+        return this.productService.create(dto);
     }
-    async findByFarm(farmId) {
-        const data = await this.productService.findByFarm(farmId);
-        return {
-            success: true,
-            message: 'Lấy danh sách sản phẩm thành công',
-            data,
-        };
+    findByFarm(farmId) {
+        return this.productService.findByFarm(farmId);
     }
-    async findOne(id) {
-        const data = await this.productService.findOne(id);
-        return {
-            success: true,
-            message: 'Lấy thông tin sản phẩm thành công',
-            data,
-        };
+    findOne(id) {
+        return this.productService.findOne(id);
     }
-    async update(id, dto) {
-        const data = await this.productService.update(id, dto);
-        return {
-            success: true,
-            message: 'Cập nhật sản phẩm thành công',
-            data,
-        };
+    update(id, dto) {
+        return this.productService.update(id, dto);
     }
-    async remove(id) {
-        const data = await this.productService.remove(id);
-        return {
-            success: true,
-            ...data,
-        };
+    remove(id) {
+        return this.productService.remove(id);
     }
 };
 exports.ProductSellerController = ProductSellerController;
@@ -68,21 +44,21 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProductSellerController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('farm_id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProductSellerController.prototype, "findByFarm", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProductSellerController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
@@ -90,14 +66,14 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_product_dto_1.UpdateProductDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProductSellerController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProductSellerController.prototype, "remove", null);
 exports.ProductSellerController = ProductSellerController = __decorate([
     (0, common_1.Controller)('seller/products'),
